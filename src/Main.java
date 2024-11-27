@@ -1,5 +1,12 @@
 public class Main {
+
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+
+        Board board = new Board(16, 16, 40);
+        //board.printBoard();
+        GUI window = new GUI(board);
+        window.startGame();
+
     }
+
 }
