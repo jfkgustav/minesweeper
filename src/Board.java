@@ -14,19 +14,17 @@ public class Board {
     private Set<Integer> visibleTiles;
 
 
-    public Board(int height, int width, int bombs){
+    public Board(GameSettings options){
+        BOARD_WIDTH = options.cols;
+        BOARD_HEIGHT = options.rows;
         visibleTiles = new HashSet<>();
-        numberOfTiles = height * width;
+        numberOfTiles = BOARD_WIDTH * BOARD_HEIGHT;
         tiles = new Tile[numberOfTiles];
-        numberOfBombs = bombs;
-        BOARD_WIDTH = width;
-        BOARD_HEIGHT = height;
+        numberOfBombs = options.mines;
         for(int i = 0; i < numberOfTiles; i++){
                tiles[i] = new Tile();
         }
         numberOfVisible = 0;
-
-
         fillBoard();
     }
 
