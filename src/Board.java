@@ -1,17 +1,16 @@
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
 public class Board {
 
-    private int numberOfTiles;
-    private Tile[] tiles;
-    private int numberOfBombs;
+    private final int numberOfTiles;
+    private final Tile[] tiles;
+    private final int numberOfBombs;
     private final int BOARD_WIDTH;
     private final int BOARD_HEIGHT;
     private int numberOfVisible;
-    private Set<Integer> visibleTiles;
+    private final Set<Integer> visibleTiles;
 
 
     public Board(GameSettings options){
@@ -40,7 +39,7 @@ public class Board {
                 try {
                     tiles[bombLocation].setBomb();
                 } catch (RuntimeException e){
-                    System.err.println(e.getMessage());;
+                    System.err.println(e.getMessage());
                 }
                 bombsLeft--;
             }
@@ -86,7 +85,7 @@ public class Board {
                 System.out.print("|");
             }
             if(tiles[i].isBomb()){
-                System.out.printf(" X ");
+                System.out.print(" X ");
                 continue;
             }
             System.out.print(" " +tiles[i].state+ " ");

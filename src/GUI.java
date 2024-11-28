@@ -9,15 +9,13 @@ import java.util.Set;
 
 public class GUI {
 
-    private JFrame window;
+    private final JFrame window;
     private Board board;
     private final int WINDOW_HEIGHT = 1200;
     private final int WINDOW_WIDTH = 1200;
     private GameSettings settings;
     private JButton[] tiles;
-    private int rows;
     private int columns;
-    private int boardSize;
     private Set<Integer> pressed;
     private final Map<String, Color> colorMap;
     private int numberOfClicks;
@@ -26,7 +24,7 @@ public class GUI {
 
     public GUI(){
         window = new JFrame("MINESWEEPER");
-        colorMap = new HashMap<String, Color>();
+        colorMap = new HashMap<>();
         fillColorMap();
     }
 
@@ -41,8 +39,8 @@ public class GUI {
         numberOfClicks = 0;
 
         this.board = board;
-        boardSize = board.getNumberOfTiles();
-        rows = board.getNumberOfRows();
+        int boardSize = board.getNumberOfTiles();
+        int rows = board.getNumberOfRows();
         columns = boardSize / rows;
         tiles = new JButton[board.getNumberOfTiles()];
         window.setLayout(new GridLayout(rows, columns));
@@ -58,7 +56,7 @@ public class GUI {
             b.addActionListener(e -> {
                 board.setVisible(index);
                 String state = board.getStateAt(index);
-                if(state.equals("")) checkNeighbours(index);
+                if(state.isEmpty()) checkNeighbours(index);
                 b.setText(state);
                 b.setBackground(Color.lightGray);
                 b.setForeground(colorMap.get(state));
@@ -118,7 +116,7 @@ public class GUI {
                 if (board.isOnMap(tilePosition) && index != tilePosition) {
                     JButton b = tiles[tilePosition];
                     String state = board.getStateAt(tilePosition);
-                    if (state.equals("")) {
+                    if (state.isEmpty()) {
                         checkNeighbours(tilePosition);
                         b.setText(state);
                         board.setVisible(tilePosition);
@@ -151,23 +149,20 @@ public class GUI {
 
         window.setLayout(new FlowLayout());
         // Skapa en ActionListener för knapparna
-        ActionListener buttonListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Kollar vilken knapp som trycktes
-                if (e.getSource() == easy) {
-                    settings = new GameSettings(9, 9, 10);
-                    Board board = new Board(settings);
-                    startGame(board);
-                } else if (e.getSource() == medium) {
-                    settings = new GameSettings(16, 16, 40);
-                    Board board = new Board(settings);
-                    startGame(board);
-                } else if (e.getSource() == hard) {
-                    settings = new GameSettings(16, 30, 99);
-                    Board board = new Board(settings);
-                    startGame(board);
-                }
+        ActionListener buttonListener = e -> {
+            // Kollar vilken knapp som trycktes
+            if (e.getSource() == easy) {
+                settings = new GameSettings(9, 9, 10);
+                Board board = new Board(settings);
+                startGame(board);
+            } else if (e.getSource() == medium) {
+                settings = new GameSettings(16, 16, 40);
+                Board board = new Board(settings);
+                startGame(board);
+            } else if (e.getSource() == hard) {
+                settings = new GameSettings(16, 30, 99);
+                Board board = new Board(settings);
+                startGame(board);
             }
         };
 
